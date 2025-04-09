@@ -7,3 +7,37 @@ h2{
 p{
     margin-top: 2px;
 }
+
+.animate-background-slide{
+    background-size: 100% 100%;
+}
+
+.van{
+    animation: move 5s linear  forwards ;
+}
+
+
+@keyframes move {
+    0%{
+        transform: translateX(0);
+    }
+    100%{
+        transform: translateX(69vw);
+    }
+}
+
+
+.line{
+    animation: linemove 5s linear  forwards;
+    
+}
+
+
+@keyframes linemove {
+    0%{
+        width: (0);
+    }
+    100%{
+        width: 90vw;
+    }
+}
