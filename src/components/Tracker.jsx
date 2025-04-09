@@ -139,14 +139,32 @@ const Tracker = () => {
           />
           <hr className="text-red-300 md:max-w-[70vw] border-2 rounded-r-2xl line mt-[-4px]" />
         </div>
-
-        <p className="relative top-4 ">
+        <div className="flex md:flex-row flex-col gap-4 md:justify-between justify-center items-center mt-4">
+        <p className="text-sm  ">
           {" "}
-          <span className="text-green-300 text-sm">AWB#</span>{" "}
+          <span className="text-green-300 ">AWB#</span>{" "}
           {delhiveryTracking[0]?.Shipment.AWB}
         </p>
+        <p className=" bg-gray-50 p-4 rounded-md md:shadow-sm" >
+          <span className={delhiveryTracking[0]?.Shipment.Status.Status==="Pending"?"text-red-500":"text-green-500"}> {delhiveryTracking[0]?.Shipment.Status.Status==="Pending"?"IN-TRANSIT":"DELIVERED"}</span> <br />
+          {delhiveryTracking[0]?.Shipment.Status.Instructions}
+
+        </p>
+        </div>
+
+      
       </div>
     </>
+
+// "Status": "Pending",
+// "StatusLocation": "Navsari_Vejalpore_D (Gujarat)",
+// "StatusDateTime": "2025-04-07T07:54:48.91",
+// "RecievedBy": "",
+// "StatusCode": "X-IBD3F",
+// "StatusType": "UD",
+// "Instructions": "Shipment Received at Facility"
+
+
   );
 };
 

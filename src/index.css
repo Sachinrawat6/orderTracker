@@ -1,11 +1,10 @@
 @import "tailwindcss";
 
-h2{
-    color: #333;
-}
+
 
 p{
     margin-top: 2px;
+    
 }
 
 .animate-background-slide{
