@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AwbCopyBox from "./CopyButton";
 
 const Tracker = () => {
   const [inputAwb, setInputAwb] = useState("");
@@ -140,11 +141,9 @@ const Tracker = () => {
           <hr className="text-red-300 md:max-w-[70vw] border-2 rounded-r-2xl line mt-[-4px]" />
         </div>
         <div className="flex md:flex-row flex-col gap-4 md:justify-between  items-center mt-4">
-        <p className="text-sm bg-gray-50 p-4 ">
-          {" "}
-          <span className="text-green-300 ">AWB#</span>{" "}
-          {delhiveryTracking[0]?.Shipment.AWB}
-        </p>
+        
+          <AwbCopyBox delhiveryTracking={delhiveryTracking } />
+        
         <p className=" bg-gray-50 p-4 rounded-md  text-sm" >
           <span className={delhiveryTracking[0]?.Shipment.Status.Status!=="Delivered"?"text-red-500":"text-green-500"}> {delhiveryTracking[0]?.Shipment.Status.Status!=="Deliverd"? delhiveryTracking[0]?.Shipment.Status.Status :"DELIVERED"}</span> <br />
           {delhiveryTracking[0]?.Shipment.Status.Instructions} <br />
