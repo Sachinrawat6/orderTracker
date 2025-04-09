@@ -62,6 +62,7 @@ const Tracker = () => {
           />
           <input
             type="text"
+            disabled
             placeholder="Enter Order ID"
             value={inputOrderID}
             onChange={(e) => setInputOrderID(e.target.value)}
