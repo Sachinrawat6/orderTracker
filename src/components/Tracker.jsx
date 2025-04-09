@@ -47,18 +47,7 @@ const Tracker = () => {
     }
   };
 
-  const now = new Date();
-  let dd = delhiveryTracking[0]?.Shipment.PromisedDeliveryDate;
-  const target = new Date(dd);
-
-  // Difference in milliseconds
-  const diffMs = target - now;
-
-  // Convert milliseconds to days
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-  console.log(`Days left: ${diffDays}`);
-
+  
   return (
     <>
       <div className="md:w-3xl w-[90vw] mx-auto mt-24 bg-gray-50 flex flex-col justify-center items-center py-4 rounded-xl ">
@@ -103,12 +92,16 @@ const Tracker = () => {
         <div className="bg-grays-100  mt-[-4rem] ">
           <p className="text-center text-green-400 md:text-2xl animate-pulse">
             {(() => {
+              const shipment = delhiveryTracking[0]?.Shipment;
+              const status = shipment?.Status?.Status;
               const deliveryDate = new Date(
-                delhiveryTracking[0]?.Shipment.PromisedDeliveryDate
+                status === "Pending"
+                  ? shipment?.PromisedDeliveryDate
+                  : shipment?.Status?.StatusDateTime
               );
               const today = new Date();
 
-              // Remove time part for accurate day difference
+              // Clean time parts
               deliveryDate.setHours(0, 0, 0, 0);
               today.setHours(0, 0, 0, 0);
 
@@ -116,12 +109,27 @@ const Tracker = () => {
                 (deliveryDate - today) / (1000 * 60 * 60 * 24)
               );
 
-              if (diffDays === 0) return "Arriving today";
-              if (diffDays === 1) return "Arriving Yesterday";
-
-              // Format date like '11 March'
               const options = { day: "numeric", month: "long" };
-              return `Arriving On ${deliveryDate.toLocaleDateString("en-US", options)}`;
+
+              if (status === "Delivered") {
+                return `Delivered on ${deliveryDate.toLocaleDateString(
+                  "en-US",
+                  options
+                )}`;
+              }
+
+              if (diffDays === 0 && status === "Pending") {
+                return "Arriving today";
+              }
+
+              if (diffDays === 1 && status === "Pending") {
+                return "Arriving yesterday";
+              }
+
+              return `Arriving on ${deliveryDate.toLocaleDateString(
+                "en-US",
+                options
+              )}`;
             })()}
           </p>
 
@@ -135,10 +143,9 @@ const Tracker = () => {
         <p className="relative top-4 ">
           {" "}
           <span className="text-green-300 text-sm">AWB#</span>{" "}
-          {delhiveryTracking[0]?.Shipment.AWB}{" "}
+          {delhiveryTracking[0]?.Shipment.AWB}
         </p>
       </div>
-
     </>
   );
 };
