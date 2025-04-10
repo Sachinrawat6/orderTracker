@@ -35,16 +35,37 @@ const Tracker = () => {
         } else {
           window.location.href = `https://shiprocket.co/tracking/${inputAwb}`;
         }
-      } else if (inputOrderID !== "") {
-        window.location.href = `https://qurvii.shiprocket.co/tracking/order/${inputOrderID}`;
-      } else {
-        alert("Please enter either AWB number or Order ID");
       }
+        else if (inputOrderID !== "") {
+          try {
+            const response = await fetch(`https://backend-hug2.onrender.com/track/${inputOrderID}`);
+            const result = await response.json();
+        
+            // Check if tracking info exists and is valid
+            if (result?.ShipmentData && result.ShipmentData.length > 0 && result.ShipmentData[0]?.Shipment?.AWB !== "0") {
+              setDelhiveryTracking(result.ShipmentData);
+              setDelhiveryDisplay(true);
+              console.log(result.ShipmentData);
+            } else {
+              // If no valid Delhivery data found, redirect to Shiprocket
+              window.location.href = `https://qurvii.shiprocket.co/tracking/order/${inputOrderID}`;
+            }
+          } catch (error) {
+            console.error("Tracking fetch error:", error);
+            // On error, also redirect to Shiprocket
+            window.location.href = `https://qurvii.shiprocket.co/tracking/order/${inputOrderID}`;
+          }
+        } else {
+          alert("Please enter either AWB number or Order ID");
+        }
+      
     } catch (err) {
       console.error("Tracking fetch error:", err);
       setError(true);
+      setDelhiveryDisplay(false);
     } finally {
       setLoading(false);
+      // setDelhiveryDisplay(false);
     }
   };
 
@@ -62,7 +83,7 @@ const Tracker = () => {
           />
           <input
             type="text"
-            disabled
+            
             placeholder="Enter Order ID"
             value={inputOrderID}
             onChange={(e) => setInputOrderID(e.target.value)}
@@ -156,14 +177,6 @@ const Tracker = () => {
       
       </div>
     </>
-
-// "Status": "Pending",
-// "StatusLocation": "Navsari_Vejalpore_D (Gujarat)",
-// "StatusDateTime": "2025-04-07T07:54:48.91",
-// "RecievedBy": "",
-// "StatusCode": "X-IBD3F",
-// "StatusType": "UD",
-// "Instructions": "Shipment Received at Facility"
 
 
   );
