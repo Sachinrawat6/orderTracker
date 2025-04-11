@@ -303,7 +303,7 @@ const CopyOfTracker = ({
       {delhiveryDisplay && (
         <div className="md:container mx-auto w-full md:mt-10 mt-4 px-4">
           <div>
-            <p className="text-center animate-bounce duration-200 text-green-500  md:text-2xl ">
+            {/* <p className="text-center animate-bounce duration-200 text-green-500  md:text-2xl ">
               {(() => {
                 const shipment = delhiveryTracking[0]?.Shipment;
                 const status = shipment?.Status?.Status;
@@ -312,6 +312,11 @@ const CopyOfTracker = ({
                     ? shipment?.PromisedDeliveryDate
                     : shipment?.Status?.StatusDateTime
                 );
+
+                if (!deliveryDate || isNaN(deliveryDate.getTime())) {
+                  return "Estimated delivery date is not available";
+                }
+
                 const today = new Date();
                 deliveryDate.setHours(0, 0, 0, 0);
                 today.setHours(0, 0, 0, 0);
@@ -340,6 +345,56 @@ const CopyOfTracker = ({
                   options
                 )}`;
               })()}
+            </p> */}
+
+            <p className="text-center animate-pulse duration-200 text-green-500 md:text-2xl">
+              {(() => {
+                const shipment = delhiveryTracking[0]?.Shipment;
+                const status = shipment?.Status?.Status;
+                const deliveryDate = new Date(
+                  status === "Pending"
+                    ? shipment?.PromisedDeliveryDate
+                    : shipment?.Status?.StatusDateTime
+                );
+
+                if (!deliveryDate || isNaN(deliveryDate.getTime())) {
+                  return "Estimated delivery date is not available";
+                }
+
+                const today = new Date();
+                deliveryDate.setHours(0, 0, 0, 0);
+                today.setHours(0, 0, 0, 0);
+
+                const diffDays = Math.floor(
+                  (deliveryDate - today) / (1000 * 60 * 60 * 24)
+                );
+                const options = { day: "numeric", month: "long" };
+
+                if (status === "Delivered") {
+                  return `Delivered on ${deliveryDate.toLocaleDateString(
+                    "en-US",
+                    options
+                  )}`;
+                }
+
+                // Delivery missed but not delivered
+                if (diffDays < 0 && status !== "Delivered") {
+                  return "Estimated delivery date is not available ";
+                }
+
+                if (diffDays === 0) {
+                  return "Arriving today";
+                }
+
+                if (diffDays === -1) {
+                  return "Arriving yesterday";
+                }
+
+                return `Arriving on ${deliveryDate.toLocaleDateString(
+                  "en-US",
+                  options
+                )}`;
+              })()}
             </p>
 
             <img
@@ -350,29 +405,23 @@ const CopyOfTracker = ({
             <hr className="text-red-300 md:max-w-[70vw] border-2 rounded-r-2xl mt-[-4px]" />
           </div>
 
-          <div className="flex md:flex-row flex-col gap-4 md:justify-between items-center mt-4">
-            
-           
-          </div>
+          <div className="flex md:flex-row flex-col gap-4 md:justify-between items-center mt-4"></div>
 
           <div className="right">
             <TrackStatus data={delhiveryTracking} />
-            
           </div>
           <hr className="text-gray-200 mb-4" />
 
           <div className="w-full flex justify-center md:flex-row flex-col  gap-4">
-          <AwbCopyBox delhiveryTracking={delhiveryTracking} />
-          <button
+            <AwbCopyBox delhiveryTracking={delhiveryTracking} />
+            <button
               className="bg-green-200 py-2 px-4 cursor-pointer  rounded-sm shadow"
               onClick={moreDetails}
             >
               More details
             </button>
           </div>
-          
         </div>
-        
       )}
     </>
   );

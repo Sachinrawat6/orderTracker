@@ -73,6 +73,7 @@ const TrackStatus = ({ data }) => {
       <div className="mt-6 text-sm text-gray-700">
         <p><strong>Current Status:</strong> {getDisplayLabel(shipment.Status.Instructions) || shipment.Status.Instructions}</p>
         <p><strong>Location:</strong> {shipment.Status.StatusLocation}</p>
+        <p><strong>Promise Delivery Date:</strong> {shipment.PromisedDeliveryDate.substring(0,10)}</p>
         <p><strong>Expected Delivery Date:</strong> {shipment.ExpectedDeliveryDate.substring(0,10)}</p>
        
       </div>
