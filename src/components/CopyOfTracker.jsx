@@ -45,7 +45,7 @@ const CopyOfTracker = () => {
         }
       } else {
         const response = await fetch(
-          `https://backend-hug2.onrender.com/track/${inputValue}`
+          `https://backend-hug2.onrender.com/track/${inputValue.toUpperCase()}`
         );
         const result = await response.json();
 
