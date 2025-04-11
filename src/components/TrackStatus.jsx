@@ -74,7 +74,7 @@ const TrackStatus = ({ data }) => {
         <p><strong>Current Status:</strong> {getDisplayLabel(shipment.Status.Instructions) || shipment.Status.Instructions}</p>
         <p><strong>Location:</strong> {shipment.Status.StatusLocation}</p>
         <p><strong>Expected Delivery Date:</strong> {shipment.ExpectedDeliveryDate.substring(0,10)}</p>
-        <p><strong>Timestamp:</strong> {new Date(shipment.Status.StatusDateTime).toLocaleString()}</p>
+       
       </div>
     </div>
   );
