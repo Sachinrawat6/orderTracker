@@ -17,7 +17,7 @@ export default function AwbCopyBox({ delhiveryTracking }) {
   return (
     <div className="flex items-center gap-2 bg-gray-50 p-4 rounded-md">
       <p className="text-sm">
-        <span className="text-green-300 font-semibold ">AWB#</span> {awb}
+        <span className="text-green-600 font-semibold ">AWB#</span> {awb}
       </p>
       <button
         onClick={copyToClipboard}
