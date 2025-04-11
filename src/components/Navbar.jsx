@@ -3,7 +3,7 @@ import React from 'react'
 const Navbar = () => {
   return (
     <div>
-        <nav className="flex md:justify-center gap-4 md:text-2xl py-4 justify-between px-4 items-center">
+        <nav className="flex md:justify-evenly gap-4 md:text-2xl py-4 justify-between px-4 items-center">
             <h2>Order Tracking</h2>
             <img 
             className='w-20'

@@ -282,7 +282,7 @@ const CopyOfTracker = ({
             placeholder="Enter AWB Number or Order ID"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            className="border border-gray-200 py-4 px-4 rounded-sm  w-full"
+            className="border border-gray-200 py-4 px-4 rounded-sm bg-white  w-full"
           />
         </div>
 
@@ -370,8 +370,9 @@ const CopyOfTracker = ({
               More details
             </button>
           </div>
-        
+          
         </div>
+        
       )}
     </>
   );
