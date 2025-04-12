@@ -34,7 +34,7 @@ const TrackStatus = ({ data }) => {
 
   return (
     <div className="bg-white p-6 rounded-2xl  max-w-5xl mx-auto">
-      <h2 className="text-2xl font-[400] mb-6">🛍️ Delhivery Status</h2>
+      {/* <h2 className="text-2xl font-[400] mb-6">🛍️ Delhivery Status</h2> */}
 
       {/* Horizontal on desktop, vertical on mobile */}
       <div className="relative flex md:flex-row flex-col md:items-center items-start md:justify-between gap-6 mb-8">

@@ -282,12 +282,12 @@ const CopyOfTracker = ({
             placeholder="Enter AWB Number or Order ID"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            className="border border-gray-200 py-4 px-4 rounded-sm bg-white  w-full"
+            className="border border-gray-200 md:py-4 py-3 px-4 rounded-sm bg-white  w-full"
           />
         </div>
 
         <button
-          className="border border-gray-200 rounded-sm mt-4 md:py-4 py-3 px-4 w-40 cursor-pointer bg-black text-[#f1f1f1]"
+          className="border border-gray-200 rounded-sm mt-4 md:py-4 py-3 px-4 md:w-40 w-25 cursor-pointer bg-black text-[#f1f1f1]"
           onClick={fetchTracking}
         >
           Track
@@ -303,49 +303,7 @@ const CopyOfTracker = ({
       {delhiveryDisplay && (
         <div className="md:container mx-auto w-full md:mt-10 mt-4 px-4">
           <div>
-            {/* <p className="text-center animate-bounce duration-200 text-green-500  md:text-2xl ">
-              {(() => {
-                const shipment = delhiveryTracking[0]?.Shipment;
-                const status = shipment?.Status?.Status;
-                const deliveryDate = new Date(
-                  status === "Pending"
-                    ? shipment?.PromisedDeliveryDate
-                    : shipment?.Status?.StatusDateTime
-                );
-
-                if (!deliveryDate || isNaN(deliveryDate.getTime())) {
-                  return "Estimated delivery date is not available";
-                }
-
-                const today = new Date();
-                deliveryDate.setHours(0, 0, 0, 0);
-                today.setHours(0, 0, 0, 0);
-                const diffDays = Math.abs(
-                  (deliveryDate - today) / (1000 * 60 * 60 * 24)
-                );
-                const options = { day: "numeric", month: "long" };
-
-                if (status === "Delivered") {
-                  return `Delivered on ${deliveryDate.toLocaleDateString(
-                    "en-US",
-                    options
-                  )}`;
-                }
-
-                if (diffDays === 0 && status !== "Delivered") {
-                  return "Arriving today";
-                }
-
-                if (diffDays === 1 && status !== "Delivered") {
-                  return "Arriving yesterday";
-                }
-
-                return `Arriving on ${deliveryDate.toLocaleDateString(
-                  "en-US",
-                  options
-                )}`;
-              })()}
-            </p> */}
+           
 
             <p className="text-center animate-pulse duration-200 text-green-500 md:text-2xl">
               {(() => {
