@@ -35,45 +35,46 @@ const Tracker = () => {
         } else {
           window.location.href = `https://shiprocket.co/tracking/${inputAwb}`;
         }
-      }
-        else if (inputOrderID !== "") {
-          try {
-            const response = await fetch(`https://backend-hug2.onrender.com/track/${inputOrderID}`);
-            const result = await response.json();
-        
-            // Check if tracking info exists and is valid
-            if (result?.ShipmentData && result.ShipmentData.length > 0 && result.ShipmentData[0]?.Shipment?.AWB !== "0") {
-              setDelhiveryTracking(result.ShipmentData);
-              setDelhiveryDisplay(true);
-              console.log(result.ShipmentData);
-            } else {
-              // If no valid Delhivery data found, redirect to Shiprocket
-              window.location.href = `https://qurvii.shiprocket.co/tracking/order/${inputOrderID}`;
-            }
-          } catch (error) {
-            console.error("Tracking fetch error:", error);
-            // On error, also redirect to Shiprocket
+      } else if (inputOrderID !== "") {
+        try {
+          const response = await fetch(
+            `https://backend-hug2.onrender.com/track/${inputOrderID}`
+          );
+          const result = await response.json();
+
+          // Check if tracking info exists and is valid
+          if (
+            result?.ShipmentData &&
+            result.ShipmentData.length > 0 &&
+            result.ShipmentData[0]?.Shipment?.AWB !== "0"
+          ) {
+            setDelhiveryTracking(result.ShipmentData);
+            setDelhiveryDisplay(true);
+            console.log(result.ShipmentData);
+          } else {
+            // If no valid Delhivery data found, redirect to Shiprocket
             window.location.href = `https://qurvii.shiprocket.co/tracking/order/${inputOrderID}`;
           }
-        } else {
-          alert("Please enter either AWB number or Order ID");
+        } catch (error) {
+          console.error("Tracking fetch error:", error);
+          // On error, also redirect to Shiprocket
+          window.location.href = `https://qurvii.shiprocket.co/tracking/order/${inputOrderID}`;
         }
-      
+      } else {
+        alert("Please enter either AWB number or Order ID");
+      }
     } catch (err) {
       console.error("Tracking fetch error:", err);
       setError(true);
       setDelhiveryDisplay(false);
     } finally {
       setLoading(false);
-
     }
   };
 
-  
   return (
     <>
       <div className="md:w-3xl w-[90vw] mx-auto mt-24 bg-gray-50 flex flex-col justify-center items-center py-4 rounded-xl ">
-
         <div className="text-black">
           <select name="" id="">
             <option value="">Search By</option>
@@ -92,7 +93,6 @@ const Tracker = () => {
           />
           <input
             type="text"
-            
             placeholder="Enter Order ID"
             value={inputOrderID}
             onChange={(e) => setInputOrderID(e.target.value)}
@@ -172,22 +172,29 @@ const Tracker = () => {
           <hr className="text-red-300 md:max-w-[70vw] border-2 rounded-r-2xl line mt-[-4px]" />
         </div>
         <div className="flex md:flex-row flex-col gap-4 md:justify-between  items-center mt-4">
-        
-          <AwbCopyBox delhiveryTracking={delhiveryTracking } />
-        
-        <p className=" bg-gray-50 p-4 rounded-md  text-sm" >
-          <span className={delhiveryTracking[0]?.Shipment.Status.Status!=="Delivered"?"text-red-500":"text-green-500"}> {delhiveryTracking[0]?.Shipment.Status.Status!=="Deliverd"? delhiveryTracking[0]?.Shipment.Status.Status :"DELIVERED"}</span> <br />
-          {delhiveryTracking[0]?.Shipment.Status.Instructions} <br />
-          <span className="text-green-400">Location: </span> {delhiveryTracking[0]?.Shipment.Status.StatusLocation}   
+          <AwbCopyBox delhiveryTracking={delhiveryTracking} />
 
-        </p>
+          <p className=" bg-gray-50 p-4 rounded-md  text-sm">
+            <span
+              className={
+                delhiveryTracking[0]?.Shipment.Status.Status !== "Delivered"
+                  ? "text-red-500"
+                  : "text-green-500"
+              }
+            >
+              {" "}
+              {delhiveryTracking[0]?.Shipment.Status.Status !== "Deliverd"
+                ? delhiveryTracking[0]?.Shipment.Status.Status
+                : "DELIVERED"}
+            </span>{" "}
+            <br />
+            {delhiveryTracking[0]?.Shipment.Status.Instructions} <br />
+            <span className="text-green-400">Location: </span>{" "}
+            {delhiveryTracking[0]?.Shipment.Status.StatusLocation}
+          </p>
         </div>
-
-      
       </div>
     </>
-
-
   );
 };
 
